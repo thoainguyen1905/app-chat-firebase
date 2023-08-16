@@ -39,10 +39,13 @@ dependencies:
   firebase_core: ^2.15.0
   flutter_native_splash: ^2.3.2
   flutter_launcher_icons: ^0.13.1
+  logger: ^2.0.1
+  firebase_auth: ^4.7.2
 
 flutter_launcher_icons:
   android: true
   ios: true
+  min_sdk_android: 21
   image_path: "assets/icons/ic_launcher.png"
 
 flutter_native_splash:
@@ -90,6 +93,12 @@ flutter:
     - assets/fonts/
     - assets/images/splash_screen.png
     - assets/icons/ic_launcher.png
+    - assets/images/robots.png
+    - assets/images/facebook.png
+    - assets/images/google_sign_in.png
+    - assets/images/apple_logo.png
+    - assets/images/robot_stars.png
+    - assets/images/robot_amazing.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -102,17 +111,27 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+    - family: Roboto-400
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+    - family: Roboto-500
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+    - family: Roboto-700
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+    - family: RobotoItalic
+      fonts:
+        - asset: assets/fonts/Roboto-Italic.ttf
+          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

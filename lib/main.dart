@@ -1,4 +1,5 @@
 import 'package:app_chat_firebase/routes/routes.dart';
+import 'package:app_chat_firebase/services/auth_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,6 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
+  await FirebaseServices().getCurrentUser();
   runApp(const MyApp());
   FlutterNativeSplash.remove();
 }
@@ -25,9 +27,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter app',
+      title: 'App chat firebase',
       color: Colors.white,
-
+      theme: ThemeData(
+        brightness: Brightness.light,
+        textTheme: const TextTheme(
+            bodyMedium: TextStyle(
+                decoration: TextDecoration.none, color: Colors.black)),
+      ),
       // theme: Themes.lightTheme,
       // darkTheme: Themes.darkTheme,
       // themeMode: getThemeMode(themeController.theme),

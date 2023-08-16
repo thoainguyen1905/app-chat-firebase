@@ -5,7 +5,7 @@ import 'package:app_chat_firebase/views/sign_up/sign_up_screen.dart';
 import 'package:get/get.dart';
 
 class Routes {
-  static const INITIAL = "/home";
+  static const INITIAL = "/sign_in";
   static final routes = [
     GetPage(
         name: '/home',

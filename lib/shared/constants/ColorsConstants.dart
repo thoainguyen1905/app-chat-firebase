@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ColorsConstants {
-  static Color light100 = hexToColor('#00CDBD');
-  static Color gray100 = hexToColor('#BCBCBC');
+  static Color light100 = hexToColor('#EBFBFA');
+  static Color light200 = hexToColor('#00CDBD');
+  static Color gray100 = hexToColor('#FAFAFA');
   static Color gray200 = hexToColor('#929293');
   static Color gray300 = hexToColor('#666667');
   static Color gray400 = hexToColor('#505151');
