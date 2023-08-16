@@ -2,6 +2,7 @@ import 'package:app_chat_firebase/controllers/UserController.dart';
 import 'package:app_chat_firebase/services/auth_firebase.dart';
 import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
 import 'package:app_chat_firebase/shared/helpers/logger.dart';
+import 'package:app_chat_firebase/shared/widgets/alert_dialog.dart';
 import 'package:app_chat_firebase/shared/widgets/button_login_social.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_button.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_input.dart';
@@ -29,13 +30,27 @@ class _SignUpWidget extends StatefulWidget {
 class __SignUpWidgetState extends State<_SignUpWidget> {
   final userController = Get.put(UserController());
   final FirebaseServices _firebaseServices = FirebaseServices();
+
   Future<void> signUp() async {
     try {
       dynamic res = await _firebaseServices.createUserwithEmailandPassword(
           userController.email.value, userController.password.value);
-      logger.w(res);
+      Get.snackbar(
+        'Đăng ký thành công!',
+        'Chúc mừng bạn đã là thành viên Young Team',
+        backgroundColor: ColorsConstants.light200,
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
     } catch (e) {
-      logger.w(e);
+      Get.snackbar(
+        'Đăng ký không thành công!',
+        'Tài khoản đã tồn tại',
+        backgroundColor: Colors.red[700],
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+      Get.delete<UserController>(force: true);
     }
   }
 
@@ -52,13 +67,17 @@ class __SignUpWidgetState extends State<_SignUpWidget> {
             Image.asset('assets/images/robot_stars.png'),
             TextTitleWidget(text: "Create your Account"),
             CustomTextInput(
-              userTyped: (t) {},
+              userTyped: (value) {
+                userController.updateEmail(value);
+              },
               obscure: false,
               leading: Icons.email,
               hintText: 'Email',
             ),
             CustomTextInput(
-              userTyped: (t) {},
+              userTyped: (value) {
+                userController.updatePassword(value);
+              },
               obscure: true,
               leading: Icons.password,
               hintText: 'Password',

@@ -33,9 +33,23 @@ class _SignInWidgetState extends State<SignInWidget> {
     try {
       dynamic res = await _firebaseServices.signInWithEmailandPassword(
           userController.email.value, userController.password.value);
-      logger.w(res);
+      Get.snackbar(
+        'Đăng nhập thành công!',
+        'Chúc mừng bạn đã là thành viên Young Team',
+        backgroundColor: ColorsConstants.light200,
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+      Get.delete<UserController>(force: true);
     } catch (e) {
-      logger.w(e);
+      Get.snackbar(
+        'Đăng nhập không thành công!',
+        'Tài khoản không chính xác',
+        backgroundColor: Colors.red[700],
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+      Get.delete<UserController>(force: true);
     }
   }
 
