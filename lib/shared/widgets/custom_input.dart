@@ -42,6 +42,7 @@ class _CustomTextInput extends StatefulWidget {
       required this.keyboard});
 
   @override
+  // ignore: no_logic_in_create_state
   State<_CustomTextInput> createState() => __CustomTextInputState(
       hintText: hintText,
       leading: leading,

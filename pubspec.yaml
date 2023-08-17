@@ -42,6 +42,9 @@ dependencies:
   logger: ^2.0.1
   firebase_auth: ^4.7.2
   cloud_firestore: ^4.8.5
+  salomon_bottom_bar: ^3.3.2
+  firebase_messaging: ^14.6.6
+  google_sign_in: ^6.1.4
 
 flutter_launcher_icons:
   android: true

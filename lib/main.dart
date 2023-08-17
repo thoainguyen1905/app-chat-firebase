@@ -1,5 +1,6 @@
 import 'package:app_chat_firebase/routes/routes.dart';
 import 'package:app_chat_firebase/services/auth_firebase.dart';
+import 'package:app_chat_firebase/services/notificaition_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,7 +16,9 @@ void main() async {
   );
   await GetStorage.init();
   await FirebaseServices().getCurrentUser();
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   runApp(const MyApp());
+  await NotificationFirebase().initNotifications();
   FlutterNativeSplash.remove();
 }
 

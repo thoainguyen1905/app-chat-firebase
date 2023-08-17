@@ -2,9 +2,14 @@ import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
 import 'package:flutter/material.dart';
 
 class ButtonLoginSocial extends StatefulWidget {
-  ButtonLoginSocial({super.key, required this.icon, required this.text});
+  ButtonLoginSocial(
+      {super.key,
+      required this.icon,
+      required this.text,
+      required this.onpress});
   String icon = '';
   String text;
+  Function onpress;
   @override
   State<ButtonLoginSocial> createState() =>
       _ButtonLoginSocialState(icon: icon, text: text);
@@ -18,7 +23,9 @@ class _ButtonLoginSocialState extends State<ButtonLoginSocial> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        widget.onpress();
+      },
       child: Container(
         height: 50,
         margin: const EdgeInsets.only(top: 20),
