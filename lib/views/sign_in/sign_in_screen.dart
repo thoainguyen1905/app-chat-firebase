@@ -5,6 +5,7 @@ import 'package:app_chat_firebase/shared/widgets/button_login_social.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_button.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_input.dart';
 import 'package:app_chat_firebase/shared/widgets/text_title_widget.dart';
+import 'package:app_chat_firebase/views/home/home_screen.dart';
 import 'package:app_chat_firebase/views/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,6 +41,7 @@ class _SignInWidgetState extends State<SignInWidget> {
         duration: const Duration(seconds: 3),
       );
       Get.delete<UserController>(force: true);
+      Get.to(const HomePageScreen());
     } catch (e) {
       Get.snackbar(
         'Đăng nhập không thành công!',

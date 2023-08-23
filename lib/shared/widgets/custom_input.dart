@@ -7,10 +7,12 @@ class CustomTextInput extends StatelessWidget {
   final Function(String)? userTyped;
   final bool obscure;
   final TextInputType keyboard;
+  final TextEditingController? controller;
 
   const CustomTextInput(
       {super.key,
       this.hintText,
+      this.controller,
       this.leading,
       required this.userTyped,
       required this.obscure,

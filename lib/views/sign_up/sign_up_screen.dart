@@ -5,6 +5,7 @@ import 'package:app_chat_firebase/shared/helpers/logger.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_button.dart';
 import 'package:app_chat_firebase/shared/widgets/custom_input.dart';
 import 'package:app_chat_firebase/shared/widgets/text_title_widget.dart';
+import 'package:app_chat_firebase/views/home/home_screen.dart';
 import 'package:app_chat_firebase/views/sign_in/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,7 @@ class __SignUpWidgetState extends State<_SignUpWidget> {
         colorText: Colors.white,
         duration: const Duration(seconds: 3),
       );
+      Get.to(const HomePageScreen());
     } catch (e) {
       logger.w(e);
       Get.snackbar(

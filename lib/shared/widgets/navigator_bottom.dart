@@ -1,6 +1,7 @@
 import 'package:app_chat_firebase/services/auth_firebase.dart';
 import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
 import 'package:app_chat_firebase/shared/helpers/logger.dart';
+import 'package:app_chat_firebase/views/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -44,15 +45,26 @@ class _NavigatorBottomState extends State<NavigatorBottom> {
 
         /// Profile
         SalomonBottomBarItem(
-          icon: const Icon(Icons.person),
-          title: const Text("Profile"),
+          icon: GestureDetector(
+            onTap: () {
+              Get.to(const ProfileScreen());
+            },
+            child: const Icon(Icons.person),
+          ),
+          title: GestureDetector(
+            onTap: () {},
+            child: const Text("Profile"),
+          ),
           selectedColor: Colors.teal,
         ),
 
-        /// Search
+        /// Sign out
         SalomonBottomBarItem(
           icon: const Icon(Icons.output),
-          title: const Text("Sign Out"),
+          title: GestureDetector(
+            onTap: () {},
+            child: const Text("Sign Out"),
+          ),
           selectedColor: Colors.orange,
         ),
       ],

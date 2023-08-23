@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       color: Colors.white,
       theme: ThemeData(
         brightness: Brightness.light,
+        fontFamily: 'Roboto-300',
         textTheme: const TextTheme(
             bodyMedium: TextStyle(
                 decoration: TextDecoration.none, color: Colors.black)),

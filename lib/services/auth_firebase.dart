@@ -1,15 +1,17 @@
 import 'dart:async';
 
+import 'package:app_chat_firebase/controllers/UserController.dart';
 import 'package:app_chat_firebase/services/notificaition_firebase.dart';
 import 'package:app_chat_firebase/shared/helpers/logger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final userController = Get.put(UserController());
   final NotificationFirebase _notificationFirebase = NotificationFirebase();
-
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   Future<void> getToken() async {
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
@@ -32,8 +34,6 @@ class FirebaseServices {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      logger.w(googleAuth);
-      logger.w(credential);
       //  await _firebaseFirestore
       //       .collection('users')
       //       .doc(credential.user!.uid)
@@ -47,7 +47,32 @@ class FirebaseServices {
 
   Future<void> getCurrentUser() async {
     dynamic current = FirebaseAuth.instance.currentUser;
-    logger.w(current);
+    userController.setUser(current);
+  }
+
+  Future<void> updateInforUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    logger.w(user);
+    if (user != null) {
+      await user.updateDisplayName(userController.name.value);
+      await user.updateEmail(userController.email.value);
+      // await user.updatePhoneNumber(userController.phone.value);
+      await user.updatePhotoURL(userController.photo.value);
+      logger.w(userController.email.value);
+    }
+    // if (user != null) {
+    //   String uid = user.uid;
+    //   DocumentReference userRef =
+    //       FirebaseFirestore.instance.collection('users').doc(uid);
+    //   Map<String, dynamic> newData = {
+    //     'email': userController.email.value,
+    //     'phoneNumber': userController.phone.value,
+    //     'photoURL': userController.photo.value,
+    //     'displayName': userController.name.value
+    //   };
+    //   logger.w(newData);
+    //   userRef.set(newData, SetOptions(merge: true));
+    // }
   }
 
   Future<void> authStateChanges() async {
@@ -71,7 +96,7 @@ class FirebaseServices {
           .set({
         'uid': userCredential.user!.uid,
         'email': email,
-        'tokenDevice': _notificationFirebase.getToken()
+        // 'tokenDevice': _notificationFirebase.getToken()
       }, SetOptions(merge: true));
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -96,7 +121,7 @@ class FirebaseServices {
           .set({
         'uid': userCredential.user!.uid,
         'email': email,
-        'tokenDevice': _notificationFirebase.getToken()
+        // 'tokenDevice': _notificationFirebase.getToken()
       });
       return userCredential;
     } on FirebaseAuthException catch (e) {
