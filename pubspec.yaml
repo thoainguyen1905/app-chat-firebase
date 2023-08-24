@@ -45,6 +45,8 @@ dependencies:
   salomon_bottom_bar: ^3.3.2
   firebase_messaging: ^14.6.6
   google_sign_in: ^6.1.4
+  image_picker: ^1.0.2
+  firebase_storage: ^11.2.6
 
 flutter_launcher_icons:
   android: true

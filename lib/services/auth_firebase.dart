@@ -47,7 +47,9 @@ class FirebaseServices {
 
   Future<void> getCurrentUser() async {
     dynamic current = FirebaseAuth.instance.currentUser;
+    if(current != null) {
     userController.setUser(current);
+    }
   }
 
   Future<void> updateInforUser() async {

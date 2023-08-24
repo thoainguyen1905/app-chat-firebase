@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:app_chat_firebase/controllers/UserController.dart';
 import 'package:app_chat_firebase/services/auth_firebase.dart';
 import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
+import 'package:app_chat_firebase/shared/helpers/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InfoWidget extends StatefulWidget {
   const InfoWidget({super.key});
@@ -20,6 +25,33 @@ class _InfoWidgetState extends State<InfoWidget> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> uploadAvatar() async {}
+  Future<void> pickUploadImage() async {
+    final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 80);
+    // Reference ref =
+    //     FirebaseStorage.instance.ref().child('scaled_IMG_20230824_163710.jpg');
+    // await ref.putFile(File(image!.path));
+    // ref.getDownloadURL().then((value) {
+    //   logger.w(value);
+    // });
+    if (image != null) {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_images/${userController.uid}.jpg');
+      final uploadTask = ref.putFile(File(image.path));
+      final snapshot = await uploadTask.whenComplete(() {});
+      final imageUrl = await snapshot.ref.getDownloadURL();
+      logger.w(
+        'imageUrl: $imageUrl',
+      );
+      userController.updatePhoto(imageUrl);
+    }
   }
 
   @override
@@ -57,11 +89,12 @@ class _InfoWidgetState extends State<InfoWidget> {
         ),
         Stack(
           children: [
-            const CircleAvatar(
-              radius: 100,
-              backgroundImage: NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdqPl43OwkBWK01LjUks2q8qmS43UzW_TpFw&usqp=CAU'),
-            ),
+            GetBuilder<UserController>(
+                builder: (_) => CircleAvatar(
+                      radius: 100,
+                      backgroundImage:
+                          NetworkImage(userController.photo.toString()),
+                    )),
             Positioned(
               bottom: 5,
               right: 10,
@@ -70,7 +103,12 @@ class _InfoWidgetState extends State<InfoWidget> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: ColorsConstants.light200),
-                child: const Icon(Icons.edit, color: Colors.white),
+                child: GestureDetector(
+                  onTap: () {
+                    pickUploadImage();
+                  },
+                  child: const Icon(Icons.edit, color: Colors.white),
+                ),
               ),
             )
           ],

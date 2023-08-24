@@ -10,6 +10,7 @@
         android:label="app_chat_firebase"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
