@@ -1,4 +1,5 @@
 import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
+import 'package:app_chat_firebase/shared/helpers/logger.dart';
 import 'package:app_chat_firebase/views/chat/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,6 +46,7 @@ class _ListUsersState extends State<ListUsers> {
         onTap: () {
           Get.to(const ChatScreen(),
               arguments: {'email': data['email'], 'uid': data['uid']});
+          logger.w(data);
         },
         child: Container(
           height: 100,
@@ -63,9 +65,9 @@ class _ListUsersState extends State<ListUsers> {
                   const SizedBox(
                     height: 8,
                   ),
-                  const Text(
-                    'Bobo - Dec 19 .2024',
-                    style: TextStyle(
+                  Text(
+                    data['displayName'] ?? 'Bobo - Dec 19 .2024',
+                    style: const TextStyle(
                         color: Colors.black,
                         fontFamily: 'Roboto-300',
                         fontSize: 18,

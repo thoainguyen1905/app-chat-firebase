@@ -47,34 +47,39 @@ class FirebaseServices {
 
   Future<void> getCurrentUser() async {
     dynamic current = FirebaseAuth.instance.currentUser;
-    if(current != null) {
-    userController.setUser(current);
+    if (current != null) {
+      userController.setUser(current);
+      logger.w(current);
     }
   }
 
   Future<void> updateInforUser() async {
     User? user = FirebaseAuth.instance.currentUser;
-    logger.w(user);
     if (user != null) {
       await user.updateDisplayName(userController.name.value);
       await user.updateEmail(userController.email.value);
       // await user.updatePhoneNumber(userController.phone.value);
       await user.updatePhotoURL(userController.photo.value);
-      logger.w(userController.email.value);
+      await _firebaseFirestore.collection('users').doc(user.uid).set({
+        'uid': user.uid,
+        'email': userController.email.value,
+        'photoURL': userController.photo.value,
+        'displayName': userController.name.value
+      }, SetOptions(merge: true));
+      // if (user != null) {
+      //   String uid = user.uid;
+      //   DocumentReference userRef =
+      //       FirebaseFirestore.instance.collection('users').doc(uid);
+      //   Map<String, dynamic> newData = {
+      //     'email': userController.email.value,
+      //     'phoneNumber': userController.phone.value,
+      //     'photoURL': userController.photo.value,
+      //     'displayName': userController.name.value
+      //   };
+      //   logger.w(newData);
+      //   userRef.set(newData, SetOptions(merge: true));
+      // }
     }
-    // if (user != null) {
-    //   String uid = user.uid;
-    //   DocumentReference userRef =
-    //       FirebaseFirestore.instance.collection('users').doc(uid);
-    //   Map<String, dynamic> newData = {
-    //     'email': userController.email.value,
-    //     'phoneNumber': userController.phone.value,
-    //     'photoURL': userController.photo.value,
-    //     'displayName': userController.name.value
-    //   };
-    //   logger.w(newData);
-    //   userRef.set(newData, SetOptions(merge: true));
-    // }
   }
 
   Future<void> authStateChanges() async {

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app_chat_firebase/controllers/UserController.dart';
 import 'package:app_chat_firebase/services/auth_firebase.dart';
 import 'package:app_chat_firebase/shared/constants/ColorsConstants.dart';
-import 'package:app_chat_firebase/shared/helpers/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +33,6 @@ class _InfoWidgetState extends State<InfoWidget> {
         maxWidth: 512,
         maxHeight: 512,
         imageQuality: 80);
-    // Reference ref =
-    //     FirebaseStorage.instance.ref().child('scaled_IMG_20230824_163710.jpg');
-    // await ref.putFile(File(image!.path));
-    // ref.getDownloadURL().then((value) {
-    //   logger.w(value);
-    // });
     if (image != null) {
       final ref = FirebaseStorage.instance
           .ref()
@@ -47,10 +40,15 @@ class _InfoWidgetState extends State<InfoWidget> {
       final uploadTask = ref.putFile(File(image.path));
       final snapshot = await uploadTask.whenComplete(() {});
       final imageUrl = await snapshot.ref.getDownloadURL();
-      logger.w(
-        'imageUrl: $imageUrl',
-      );
+      await FirebaseAuth.instance.currentUser?.updatePhotoURL(imageUrl);
       userController.updatePhoto(imageUrl);
+      Get.snackbar(
+        'Thay đổi ảnh thành công!',
+        'Chúc mừng bạn đã là thành viên Young Team',
+        backgroundColor: ColorsConstants.light200,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
     }
   }
 
@@ -192,6 +190,13 @@ class _InfoWidgetState extends State<InfoWidget> {
         GestureDetector(
           onTap: () {
             _firebaseServices.updateInforUser();
+            Get.snackbar(
+              'Cập nhật thông tin thành công!',
+              'Chúc mừng bạn đã là thành viên Young Team',
+              backgroundColor: ColorsConstants.light200,
+              colorText: Colors.white,
+              duration: const Duration(seconds: 3),
+            );
           },
           child: Container(
             width: MediaQuery.of(context).size.width,
